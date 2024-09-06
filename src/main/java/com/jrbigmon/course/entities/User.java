@@ -3,13 +3,29 @@ package com.jrbigmon.course.entities;
 import java.io.Serializable;
 import java.util.UUID;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_users")
 public class User implements IUser, Serializable {
   public static final long serialVersionUID = 1L;
 
+  @Id
   private String id;
+  
+  @Column
   private String name;
+  
+  @Column
   private String email;
+  
+  @Column
   private String phone;
+  
+  @Column
   private String password;
 
   public User() {}
