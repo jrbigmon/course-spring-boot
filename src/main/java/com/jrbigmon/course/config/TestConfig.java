@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.jrbigmon.course.entities.Order;
 import com.jrbigmon.course.entities.User;
+import com.jrbigmon.course.entities.enums.OrderStatus;
 import com.jrbigmon.course.repositories.IOrderRepository;
 import com.jrbigmon.course.repositories.IUserRepository;
 
@@ -35,8 +36,8 @@ public class TestConfig implements CommandLineRunner {
     users.add(user1);
     users.add(user2);
 
-    Order order1 = new Order(Instant.parse("2024-09-06T21:00:00Z"), user1);
-    Order order2 = new Order(Instant.parse("2024-09-07T10:00:00Z"), user2);
+    Order order1 = new Order(Instant.parse("2024-09-06T21:00:00Z"), user1, OrderStatus.PAID);
+    Order order2 = new Order(Instant.parse("2024-09-07T10:00:00Z"), user2, OrderStatus.WAITING_PAYMENT);
 
     orders.add(order1);
     orders.add(order2);
