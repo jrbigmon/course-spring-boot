@@ -3,6 +3,8 @@ package com.jrbigmon.course.entities;
 import java.time.Instant;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,6 +22,7 @@ public class Order implements Serializable {
   private String id;
   
   @Column
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
   private Instant moment;
 
   @ManyToOne
@@ -32,11 +35,13 @@ public class Order implements Serializable {
   public Order(String id, Instant moment, User client) {
     this.id = id;
     this.moment = moment;
+    this.client = client;
   }
   
   public Order(Instant moment, User client) {
     this.id = UUID.randomUUID().toString();
     this.moment = moment;
+    this.client = client;
   }
 
   public String getId() {
