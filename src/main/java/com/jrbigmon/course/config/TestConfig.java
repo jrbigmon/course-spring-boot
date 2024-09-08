@@ -7,10 +7,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.jrbigmon.course.entities.Category;
 import com.jrbigmon.course.entities.Order;
+import com.jrbigmon.course.entities.Product;
 import com.jrbigmon.course.entities.User;
 import com.jrbigmon.course.entities.enums.OrderStatus;
 import com.jrbigmon.course.repositories.ICategoryRepository;
 import com.jrbigmon.course.repositories.IOrderRepository;
+import com.jrbigmon.course.repositories.IProductRepository;
 import com.jrbigmon.course.repositories.IUserRepository;
 
 import java.util.ArrayList;
@@ -30,11 +32,15 @@ public class TestConfig implements CommandLineRunner {
   @Autowired
   private ICategoryRepository categoryRepository;
 
+  @Autowired
+  private IProductRepository productRepository;
+
   @Override
   public void run(String... args) throws Exception {
     List<User> users = new ArrayList<>();
     List<Order> orders = new ArrayList<>();
     List<Category> categories = new ArrayList<>();
+    List<Product> products = new ArrayList<>();
 
     User user1 = new User("Vagner", "vagner@mail.com", "11321123321", "123456");
     User user2 = new User("aretha", "aretha@mail.com", "11321123123", "321654");
@@ -53,9 +59,17 @@ public class TestConfig implements CommandLineRunner {
 
     categories.add(category1);
     categories.add(category2);
+
+    Product product1 = new Product("Xbox", "loren ipsuem", 2000.00, "https://www.Xbox.com", category1);
+    Product product2 = new Product("Shirt", "loren ipsuem", 150.00, "https://www.sports.shirts.com", category2);
     
+
+    products.add(product1);
+    products.add(product2);
+
     this.userRepository.saveAll(users);
     this.orderRepository.saveAll(orders);
     this.categoryRepository.saveAll(categories);
+    this.productRepository.saveAll(products);
   }
 }
