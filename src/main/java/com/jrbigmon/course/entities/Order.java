@@ -21,7 +21,7 @@ public class Order implements Serializable {
 
   @Id
   private String id;
-  
+
   @Column
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
   private Instant moment;
@@ -30,6 +30,7 @@ public class Order implements Serializable {
   @JoinColumn(name = "client_id")
   private User client;
 
+  @Column(name = "order_status")
   private Integer orderStatus;
 
   public Order() {
@@ -41,7 +42,7 @@ public class Order implements Serializable {
     this.client = client;
     setOrderStatus(orderStatus);
   }
-  
+
   public Order(Instant moment, User client, OrderStatus orderStatus) {
     this.id = UUID.randomUUID().toString();
     this.moment = moment;
@@ -78,7 +79,7 @@ public class Order implements Serializable {
   }
 
   public void setOrderStatus(OrderStatus orderStatus) {
-    if(orderStatus != null) {
+    if (orderStatus != null) {
       this.orderStatus = orderStatus.getCode();
     }
   }
