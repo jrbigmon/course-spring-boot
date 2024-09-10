@@ -1,6 +1,8 @@
 package com.jrbigmon.course.entities;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -11,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 
@@ -32,6 +35,9 @@ public class Order implements Serializable {
 
   @Column(name = "order_status")
   private Integer orderStatus;
+
+  @OneToMany(mappedBy = "id.order")
+  private Set<OrderItem> items = new HashSet<>();
 
   public Order() {
   }
@@ -82,6 +88,14 @@ public class Order implements Serializable {
     if (orderStatus != null) {
       this.orderStatus = orderStatus.getCode();
     }
+  }
+
+  public Set<OrderItem> getItems() {
+    return items;
+  }
+
+  public void setItems(Set<OrderItem> items) {
+    this.items = items;
   }
 
   @Override
