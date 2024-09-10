@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.Instant;
 
+
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
@@ -60,9 +61,8 @@ public class TestConfig implements CommandLineRunner {
     categories.add(category1);
     categories.add(category2);
 
-    Product product1 = new Product("Xbox", "loren ipsuem", 2000.00, "https://www.Xbox.com", category1);
-    Product product2 = new Product("Shirt", "loren ipsuem", 150.00, "https://www.sports.shirts.com", category2);
-    
+    Product product1 = new Product("Xbox", "loren ipsuem", 2000.00, "https://www.Xbox.com");
+    Product product2 = new Product("Shirt", "loren ipsuem", 150.00, "https://www.sports.shirts.com");
 
     products.add(product1);
     products.add(product2);

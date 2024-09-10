@@ -2,17 +2,15 @@ package com.jrbigmon.course.entities;
 
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "tb_category")
@@ -22,12 +20,11 @@ public class Category implements Serializable {
   @Id
   private String id;
 
-  @Column(name = "name")
+  @Column
   private String name;
 
-  @OneToMany(mappedBy = "category")
-  @JsonIgnore
-  private List<Product> products = new ArrayList<Product>();
+  @Transient
+  private Set<Product> products = new HashSet<>();
 
   public Category() {
   }
@@ -58,7 +55,7 @@ public class Category implements Serializable {
     this.name = name;
   }
 
-  public List<Product> getProducts() {
+  public Set<Product> getProducts() {
     return products;
   }
 

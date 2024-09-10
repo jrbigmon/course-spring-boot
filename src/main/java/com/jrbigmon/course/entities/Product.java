@@ -5,11 +5,12 @@ import java.util.UUID;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 import java.io.Serializable;
+import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "tb_products")
@@ -31,29 +32,26 @@ public class Product implements Serializable {
   @Column(name = "img_url")
   private String imgUrl;
 
-  @ManyToOne()
-  @JoinColumn(name = "category_id")
-  private Category category;
+  @Transient
+  private Set<Category> categories = new HashSet<>();
 
   public Product() {
   }
 
-  public Product(String name, String description, Double price, String imgUrl, Category category) {
+  public Product(String name, String description, Double price, String imgUrl) {
     this.id = UUID.randomUUID().toString();
     this.name = name;
     this.description = description;
     this.price = price;
     this.imgUrl = imgUrl;
-    this.category = category;
   }
 
-  public Product(String id, String name, String description, Double price, String imgUrl, Category category) {
+  public Product(String id, String name, String description, Double price, String imgUrl) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.price = price;
     this.imgUrl = imgUrl;
-    this.category = category;
   }
 
   public String getId() {
@@ -96,12 +94,8 @@ public class Product implements Serializable {
     this.imgUrl = imgUrl;
   }
 
-  public Category getCategory() {
-    return category;
-  }
-
-  public void setCategory(Category category) {
-    this.category = category;
+  public Set<Category> getCategories() {
+    return categories;
   }
 
   @Override
