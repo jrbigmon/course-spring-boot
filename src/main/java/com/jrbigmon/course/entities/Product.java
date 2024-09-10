@@ -22,13 +22,8 @@ public class Product implements Serializable {
   @Id
   private String id;
 
-  @Column
   private String name;
-
-  @Column
   private String description;
-
-  @Column
   private Double price;
 
   @Column(name = "img_url")
