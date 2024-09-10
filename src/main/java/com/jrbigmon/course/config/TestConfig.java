@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.Instant;
 
-
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
@@ -57,9 +56,11 @@ public class TestConfig implements CommandLineRunner {
 
     Category category1 = new Category("Electronics");
     Category category2 = new Category("Sports");
+    Category category3 = new Category("games");
 
     categories.add(category1);
     categories.add(category2);
+    categories.add(category3);
 
     Product product1 = new Product("Xbox", "loren ipsuem", 2000.00, "https://www.Xbox.com");
     Product product2 = new Product("Shirt", "loren ipsuem", 150.00, "https://www.sports.shirts.com");
@@ -70,6 +71,12 @@ public class TestConfig implements CommandLineRunner {
     this.userRepository.saveAll(users);
     this.orderRepository.saveAll(orders);
     this.categoryRepository.saveAll(categories);
+    this.productRepository.saveAll(products);
+
+    product1.getCategories().add(category1);
+    product1.getCategories().add(category3);
+    product2.getCategories().add(category2);
+
     this.productRepository.saveAll(products);
   }
 }
