@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Profile;
 import com.jrbigmon.course.entities.Category;
 import com.jrbigmon.course.entities.Order;
 import com.jrbigmon.course.entities.OrderItem;
+import com.jrbigmon.course.entities.Payment;
 import com.jrbigmon.course.entities.Product;
 import com.jrbigmon.course.entities.User;
 import com.jrbigmon.course.entities.enums.OrderStatus;
@@ -48,6 +49,7 @@ public class TestConfig implements CommandLineRunner {
     List<Category> categories = new ArrayList<>();
     List<Product> products = new ArrayList<>();
     List<OrderItem> orderItems = new ArrayList<>();
+    List<Payment> payments = new ArrayList<>();
 
     User user1 = new User("Vagner", "vagner@mail.com", "11321123321", "123456");
     User user2 = new User("aretha", "aretha@mail.com", "11321123123", "321654");
@@ -78,10 +80,19 @@ public class TestConfig implements CommandLineRunner {
     this.productRepository.saveAll(products);
 
     OrderItem orderItem1 = new OrderItem(order1, product1, 2, product1.getPrice());
-    OrderItem orderItem2 = new OrderItem(order1, product2, 1, product1.getPrice());
+    OrderItem orderItem2 = new OrderItem(order1, product2, 1, product2.getPrice());
     OrderItem orderItem3 = new OrderItem(order2, product2, 1, product2.getPrice());
     Collections.addAll(orderItems, orderItem1, orderItem2, orderItem3);
   
     this.orderItemRepository.saveAll(orderItems);
+
+    Payment paymentOrder1 = new Payment(Instant.parse("2024-09-10T22:00:00Z"), order1);
+    Payment paymentOrder2 = new Payment(Instant.parse("2024-09-12T22:00:00Z"), order2);
+    Collections.addAll(payments, paymentOrder1, paymentOrder2);
+
+    order1.setPayment(paymentOrder1);
+    order2.setPayment(paymentOrder2);
+
+    this.orderRepository.saveAll(orders);
   }
 }

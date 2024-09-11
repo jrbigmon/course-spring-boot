@@ -8,12 +8,14 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jrbigmon.course.entities.enums.OrderStatus;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 
@@ -28,12 +30,15 @@ public class Order implements Serializable {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
   private Instant moment;
 
+  @Column(name = "order_status")
+  private Integer orderStatus;
+
   @ManyToOne
   @JoinColumn(name = "client_id")
   private User client;
 
-  @Column(name = "order_status")
-  private Integer orderStatus;
+  @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+  private Payment payment;
 
   @OneToMany(mappedBy = "id.order")
   private Set<OrderItem> items = new HashSet<>();
@@ -95,6 +100,18 @@ public class Order implements Serializable {
 
   public void setItems(Set<OrderItem> items) {
     this.items = items;
+  }
+
+  public Payment getPayment() {
+    return payment;
+  }
+
+  public void setPayment(Payment payment) {
+    this.payment = payment;
+  }
+
+  public Double getTotal() {
+    return this.items.stream().reduce(0.0, (total, orderItem) -> total + orderItem.getSubTotal(), Double::sum);
   }
 
   @Override

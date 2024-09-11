@@ -62,6 +62,14 @@ public class OrderItem implements Serializable {
     this.price = price;
   }
 
+  public Double getSubTotal() {
+    if (price != null && quantity != null) {
+      return this.price * this.quantity;
+    }
+
+    return 0.0;
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
