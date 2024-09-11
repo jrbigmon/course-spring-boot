@@ -2,6 +2,8 @@ package com.jrbigmon.course.entities;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -100,6 +102,7 @@ public class Product implements Serializable {
     return categories;
   }
 
+  @JsonIgnore
   public Set<Order> getOrders() {
     Set<Order> setOrders = new HashSet<Order>();
     for (OrderItem orderItem : items)
