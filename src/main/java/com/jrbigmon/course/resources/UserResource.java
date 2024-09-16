@@ -9,6 +9,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.jrbigmon.course.entities.User;
 import com.jrbigmon.course.services.UserService;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -48,4 +49,10 @@ public class UserResource {
     return ResponseEntity.created(uri).body(entity);
   }
 
+  @DeleteMapping(value ="/{id}")
+  public ResponseEntity<Void> deleteById(@PathVariable String id) {
+    this.service.delete(id);
+
+    return ResponseEntity.noContent().build();
+  }
 }
