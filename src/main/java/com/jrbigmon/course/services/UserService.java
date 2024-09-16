@@ -8,7 +8,6 @@ import com.jrbigmon.course.repositories.IUserRepository;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class UserService {
 
@@ -23,5 +22,11 @@ public class UserService {
     Optional<User> optional = userRepository.findById(id);
 
     return optional.get();
+  }
+
+  public User insert(User obj) {
+    obj.genUUID();
+
+    return userRepository.save(obj);
   }
 }

@@ -49,6 +49,12 @@ public class User implements Serializable {
     this.password = password;
   }
 
+  public void genUUID() {
+    if (this.id == null) {
+      this.id = UUID.randomUUID().toString();
+    }
+  }
+
   public String getId() {
     return id;
   }
