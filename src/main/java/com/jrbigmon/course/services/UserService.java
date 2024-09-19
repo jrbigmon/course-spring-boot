@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.jrbigmon.course.entities.User;
 import com.jrbigmon.course.repositories.IUserRepository;
+import com.jrbigmon.course.services.exceptions.ResourceNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +23,7 @@ public class UserService {
   public User findById(String id) {
     Optional<User> optional = userRepository.findById(id);
 
-    return optional.get();
+    return optional.orElseThrow(() -> new ResourceNotFoundException(id));
   }
 
   public User insert(User obj) {
