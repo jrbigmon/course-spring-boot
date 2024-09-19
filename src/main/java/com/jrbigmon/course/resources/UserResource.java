@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.net.URI;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -49,10 +50,17 @@ public class UserResource {
     return ResponseEntity.created(uri).body(entity);
   }
 
-  @DeleteMapping(value ="/{id}")
+  @DeleteMapping(value = "/{id}")
   public ResponseEntity<Void> deleteById(@PathVariable String id) {
     this.service.delete(id);
 
     return ResponseEntity.noContent().build();
+  }
+
+  @PutMapping(value = "/{id}")
+  public ResponseEntity<User> update(@PathVariable String id, @RequestBody User obj) {
+    obj = this.service.update(id, obj);
+
+    return ResponseEntity.ok().body(obj);
   }
 }
