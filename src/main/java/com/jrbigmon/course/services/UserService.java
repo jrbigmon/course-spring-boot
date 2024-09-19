@@ -10,6 +10,8 @@ import com.jrbigmon.course.repositories.IUserRepository;
 import com.jrbigmon.course.services.exceptions.DatabaseException;
 import com.jrbigmon.course.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -48,11 +50,16 @@ public class UserService {
   }
 
   public User update(String id, User obj) {
-    User entity = this.userRepository.getReferenceById(id);
-
-    this.updateData(entity, obj);
-
-    return this.userRepository.save(entity);
+    try {
+      User entity = this.userRepository.getReferenceById(id);
+  
+      this.updateData(entity, obj);
+  
+      return this.userRepository.save(entity);
+    } catch (EntityNotFoundException e) {
+      e.printStackTrace();
+      throw new ResourceNotFoundException(id);
+    }
   }
 
   private void updateData(User entity, User obj) {
