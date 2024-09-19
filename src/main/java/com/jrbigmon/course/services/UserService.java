@@ -41,10 +41,8 @@ public class UserService {
     try {
       userRepository.deleteById(id);
     } catch (EmptyResultDataAccessException e) {
-      e.printStackTrace();
       throw new ResourceNotFoundException(id);
     } catch (DataIntegrityViolationException e) {
-      e.printStackTrace();
       throw new DatabaseException(e.getMessage());
     }
   }
@@ -52,12 +50,11 @@ public class UserService {
   public User update(String id, User obj) {
     try {
       User entity = this.userRepository.getReferenceById(id);
-  
+
       this.updateData(entity, obj);
-  
+
       return this.userRepository.save(entity);
     } catch (EntityNotFoundException e) {
-      e.printStackTrace();
       throw new ResourceNotFoundException(id);
     }
   }
