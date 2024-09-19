@@ -1,10 +1,13 @@
 package com.jrbigmon.course.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.jrbigmon.course.entities.User;
 import com.jrbigmon.course.repositories.IUserRepository;
+import com.jrbigmon.course.services.exceptions.DatabaseException;
 import com.jrbigmon.course.services.exceptions.ResourceNotFoundException;
 
 import java.util.List;
@@ -33,7 +36,15 @@ public class UserService {
   }
 
   public void delete(String id) {
-    userRepository.deleteById(id);
+    try {
+      userRepository.deleteById(id);
+    } catch (EmptyResultDataAccessException e) {
+      e.printStackTrace();
+      throw new ResourceNotFoundException(id);
+    } catch (DataIntegrityViolationException e) {
+      e.printStackTrace();
+      throw new DatabaseException(e.getMessage());
+    }
   }
 
   public User update(String id, User obj) {
